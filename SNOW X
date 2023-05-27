@@ -1,0 +1,272 @@
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/vff1bQ9F"))()
+
+local Window = Library.CreateLib("SNOW X", "DarkTheme")
+
+local Tab = Window:NewTab("Features")
+
+local Section = Tab:NewSection("Main")
+
+Section:NewButton("FOV Changer", "ButtonInfo", function()
+
+workspace.CurrentCamera.FieldOfView = 120
+
+end)
+
+Section:NewButton("Inf Jump", "ButtonInfo", function()
+
+local InfiniteJumpEnabled = true game:GetService("UserInputService").JumpRequest:connect(function()  if InfiniteJumpEnabled then   game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")  end end)
+
+end)
+
+Section:NewButton("Gravity", "ButtonInfo", function()
+
+game.Workspace.Gravity = 75   
+
+end)
+
+Section:NewButton("Aim-Assist", "ButtonInfo", function()
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/yeerma/diggabrown/main/sidegriddy'))() 
+
+end)
+
+local Tab = Window:NewTab("Player")
+
+local Section = Tab:NewSection("Player Features")
+
+Section:NewSlider("WalkSpeed", "SliderInfo", 23, 23, function(s) -- 500 (MaxValue) | 0 (MinValue)
+
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+
+end)
+
+Section:NewButton("ESP", "See player", function()
+
+local FillColor = Color3.fromRGB(175,25,255)
+
+local DepthMode = "AlwaysOnTop"
+
+local FillTransparency = 0.5
+
+local OutlineColor = Color3.fromRGB(255,255,255)
+
+local OutlineTransparency = 0
+
+local CoreGui = game:FindService("CoreGui")
+
+local Players = game:FindService("Players")
+
+local lp = Players.LocalPlayer
+
+local connections = {}
+
+local Storage = Instance.new("Folder")
+
+Storage.Parent = CoreGui
+
+Storage.Name = "Highlight_Storage"
+
+local function Highlight(plr)
+
+    local Highlight = Instance.new("Highlight")
+
+    Highlight.Name = plr.Name
+
+    Highlight.FillColor = FillColor
+
+    Highlight.DepthMode = DepthMode
+
+    Highlight.FillTransparency = FillTransparency
+
+    Highlight.OutlineColor = OutlineColor
+
+    Highlight.OutlineTransparency = 0
+
+    Highlight.Parent = Storage
+
+    
+
+    local plrchar = plr.Character
+
+    if plrchar then
+
+        Highlight.Adornee = plrchar
+
+    end
+
+    connections[plr] = plr.CharacterAdded:Connect(function(char)
+
+        Highlight.Adornee = char
+
+    end)
+
+end
+
+Players.PlayerAdded:Connect(Highlight)
+
+for i,v in next, Players:GetPlayers() do
+
+    Highlight(v)
+
+end
+
+Players.PlayerRemoving:Connect(function(plr)
+
+    local plrname = plr.Name
+
+    if Storage[plrname] then
+
+        Storage[plrname]:Destroy()
+
+    end
+
+    if connections[plr] then
+
+        connections[plr]:Disconnect()
+
+    end
+
+end)
+
+    
+
+end)
+
+Section:NewButton("Auto-Spam (Can't Turn Off)", "ButtonInfo", function()
+
+local HttpService = game:GetService("HttpService")
+
+local Players = game:GetService("Players")
+
+local UserInputService = game:GetService("UserInputService")
+
+--I based this script on ChatBot, but with the SimSimi api, therefore it has more accurate and fun answers XD
+
+--Modify these parameters as you want--
+
+local idioma = "en" --Here is the language you want SimSImi to respond to, es for "Español", en for "English"
+
+local chatfuel = "True" --If you want me to censor the swearing "True" or "False"
+
+--From here down I don't recommend moving him if you don't know Lua
+
+local function mensajepro(mensaje, jugador) --In this function the magic happens
+
+    local texto = mensaje
+
+    local Responde = game:HttpGet("https://api.simsimi.net/v2/?text="..texto.."&lc="..idioma.."&cf="..chatfuel) --The SimSImi api is called
+
+    local datos = HttpService:JSONDecode(Responde)
+
+    
+
+   wait()
+
+   
+
+   game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(jugador.." "..datos.success, "All") --A message is sent with the response of SimSImi
+
+end
+
+Players.PlayerChatted:Connect(function(type, plr, message) --When a player speaks
+
+    for _,plrs in pairs(game.Players:GetPlayers()) do
+
+ 
+
+ if (Players.LocalPlayer.Character.HumanoidRootPart.Position - plrs.Character.HumanoidRootPart.Position).magnitude <= 10 then --If the player is nearby, SimSimi will read their message.
+
+  if plr.Name == plrs.Name then
+
+      mensajepro(message, plr.Name) --The function is called
+
+  end
+
+ end
+
+end
+
+end)   
+
+end)
+
+Section:NewButton("Tracer (Found player Ez)", "ButtonInfo", function()
+
+_G.HeadSize = 8
+
+_G.Disabled = true
+
+ 
+
+game:GetService('RunService').RenderStepped:connect(function()
+
+if _G.Disabled then
+
+for i,v in next, game:GetService('Players'):GetPlayers() do
+
+if v.Name ~= game:GetService('Players').LocalPlayer.Name then
+
+pcall(function()
+
+v.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
+
+v.Character.HumanoidRootPart.Transparency = 0.9
+
+v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really blue")
+
+v.Character.HumanoidRootPart.Material = "Neon"
+
+v.Character.HumanoidRootPart.CanCollide = false
+
+end)
+
+end
+
+end
+
+end
+
+end)  
+
+end)
+
+local Tab = Window:NewTab("Animation")
+
+local Section = Tab:NewSection("Animation for good Experience")
+
+Section:NewButton("ButtonText", "ButtonInfo", function()
+
+local Animate =
+
+game.Players.LocalPlayer.Character.Animate
+
+Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616158929"
+
+Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616160636"
+
+Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616168032"
+
+Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616163682"
+
+Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616161997"
+
+Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616156119"
+
+Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616157476"
+
+game.Players.LocalPlayer.Character.Humanoid.Jump = true 
+
+end)
+
+Section:NewButton("Ninja Animation", "ButtonInfo", function()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/MtiaKuzF"))()
+
+end)
+
+local Tab = Window:NewTab("DEVELOPERS")
+
+local Section = Tab:NewSection("OWNER || MELVIN")
+
+local Section = Tab:NewSection("HELPER || SCRIPTER_GAMING")
+
